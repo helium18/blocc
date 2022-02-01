@@ -21,6 +21,7 @@ pub struct Config {
     pub columns: u32,
     pub empty_char: char,
     pub filled_char: char,
+    pub line_specific_css: &'static str,
 }
 
 pub enum Operation {
@@ -44,10 +45,11 @@ pub fn main_js() {
         .expect("No such element");
 
     let config = Config {
-        rows: 12,
-        columns: 37,
-        empty_char: '🐷',
-        filled_char: '🐸',
+        rows: 15,
+        columns: 15,
+        empty_char: '🌾',
+        filled_char: '🗿',
+        line_specific_css: "tracking-widest bg-green",
     };
 
     let mut grid = utils::get_grid(&config).unwrap();

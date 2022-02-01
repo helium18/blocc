@@ -55,6 +55,10 @@ pub fn clear_grid<'a>(
 pub fn get_grid(config: &Config) -> Result<Vec<Element>, JsValue> {
     let mut grid: Vec<Element> = vec![];
 
+    let block = document()
+        .get_element_by_id("block")
+        .ok_or_else(|| JsValue::from_str("No such <div> tag found "))?;
+
     for i in 0..config.rows {
         let element = document().create_element("p")?;
 
@@ -64,12 +68,15 @@ pub fn get_grid(config: &Config) -> Result<Vec<Element>, JsValue> {
         }
 
         element.set_text_content(Some(&text));
+        element.set_class_name(config.line_specific_css);
 
-        body().append_child(&element)?;
+        block.append_child(&element)?;
 
         element.set_attribute("id", format!("grid-{}", i).as_str())?;
         grid.push(element);
     }
+
+    body().append_child(&block)?;
 
     Ok(grid)
 }
